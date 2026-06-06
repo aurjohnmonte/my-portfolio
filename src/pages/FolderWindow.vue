@@ -97,9 +97,6 @@
                 <span class="folder-icon-sm"><img src="../images/folder.png" alt="Folder Icon" style="width: 20px; height: 20px;"></span> Open
               </div>
               <div class="ctx-divider"></div>
-              <div class="ctx-item danger" @click="handleCtx('delete')">
-                <span class="folder-icon-sm"><img src="../images/trash.png" alt="Delete Icon" style="width: 20px; height: 20px;"></span> Delete
-              </div>
             </template>
           </div>
         </transition>

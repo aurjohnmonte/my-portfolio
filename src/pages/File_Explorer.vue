@@ -263,8 +263,8 @@ export default {
             },
             imagePath: "/images/profile-pic.png",
             current_place: "home",
-            paths: ["home"],
-            history_paths: [],
+            paths: ["home"] as string[],
+            history_paths: [] as string[],
 
         }
     },

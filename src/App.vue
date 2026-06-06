@@ -266,7 +266,7 @@ export default {
     },
   },
   methods: {
-    onModalBeforeLeave(el: HTMLElement) {
+    onModalBeforeLeave(el: Element) {
       const modal = el.querySelector('.about-modal') as HTMLElement
       if (!modal) return
 
@@ -285,7 +285,7 @@ export default {
       modal.style.transformOrigin = `${centerX}px ${centerY}px`
     },
 
-    onModalAfterLeave(el: HTMLElement) {
+    onModalAfterLeave(el: Element) {
       const modal = el.querySelector('.about-modal') as HTMLElement
       if (!modal) return
       // Clean up so if it re-enters it starts fresh

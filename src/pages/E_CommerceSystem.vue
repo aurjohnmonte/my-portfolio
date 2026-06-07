@@ -219,7 +219,7 @@ export default {
       window.open('https://github.com/aurjohnmonte/Marketplace_Project', '_blank')
     },
     goToLive() {
-      window.open("http://188.245.55.188:8000", "_blank");
+      window.open("https://craftify.aurjohn-systems.site", "_blank");
     }
   }
 };

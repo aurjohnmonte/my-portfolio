@@ -223,7 +223,7 @@ export default {
       window.open('https://github.com/aurjohnmonte/Satisfaction_Survey', '_blank')
     },
     goToLive() {
-      window.open("http://188.245.55.188:8001", "_blank");
+      window.open("https://survey.aurjohn-systems.site", "_blank");
     }
   }
 };

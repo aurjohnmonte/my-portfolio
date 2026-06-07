@@ -18,7 +18,7 @@
       <div class="about-card">
         <div class="about-header">
           <div class="profile-circle">
-            <img src="../images/profile-pic.png" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%;">
+            <img src="../images/grad_pic.jpg" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%;">
           </div>
           <div class="profile-copy">
             <h2>Aurjohn Cris C. Monte</h2>

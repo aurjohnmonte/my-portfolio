@@ -214,7 +214,7 @@ export default {
       window.open('https://github.com/aurjohnmonte/Inventory_Monitoring_QRCODE', '_blank')
     },
     goToLive() {
-      window.open("https://survey-net.online", "_blank");
+      window.open("http://188.245.55.188:8002", "_blank");
     }
   }
 };

@@ -219,7 +219,7 @@ export default {
       window.open('https://github.com/aurjohnmonte/Marketplace_Project', '_blank')
     },
     goToLive() {
-      window.open("https://survey-net.online", "_blank");
+      window.open("http://188.245.55.188:8001", "_blank");
     }
   }
 };

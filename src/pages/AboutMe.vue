@@ -82,6 +82,7 @@
               <button class="ghost-button" @click="goNavigate('upwork')">Upwork</button>
               <button class="ghost-button" @click="goNavigate('facebook')">Facebook</button>
               <button class="ghost-button" @click="goNavigate('instagram')">Instagram</button>
+              <button class="ghost-button" @click="goNavigate('docker-hub')">Docker Hub</button>
             </div>
           </div>
 
@@ -331,10 +332,13 @@ export default {
           url = 'https://www.upwork.com/freelancers/~01b9c8e7a1c3f0d9e5';
           break;
         case 'linkedin':
-          url = 'https://www.linkedin.com/in/aurjohn-cris-monte-91828031a/?isSelfProfile=false';
+          url = 'https://www.linkedin.com/in/aurjohn-cris-c-monte-694a3024a/';
           break;
         case 'resume':
           url = 'https://drive.google.com/file/d/1wIg3yMRwNLiYiRV6SYrMP9Qjl7xf6PHp/view';
+          break;
+        case 'docker-hub':
+          url = "https://hub.docker.com/u/aurjohnmonte";
           break;
       }
       window.open(url, '_blank');

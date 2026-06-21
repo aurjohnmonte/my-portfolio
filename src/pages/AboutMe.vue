@@ -342,7 +342,7 @@ export default {
           url = 'https://www.linkedin.com/in/aurjohn-cris-c-monte-694a3024a/';
           break;
         case 'resume':
-          url = 'https://drive.google.com/file/d/1wIg3yMRwNLiYiRV6SYrMP9Qjl7xf6PHp/view';
+          url = 'https://drive.google.com/file/d/1rG7m38nlhvralMQB1yVowLM9M6WgrKWE/view';
           break;
         case 'docker-hub':
           url = "https://hub.docker.com/u/aurjohnmonte";

@@ -53,7 +53,7 @@
               <span class="chip">ASP.NET</span>
               <span class="chip">PHP</span>
               <span class="chip">JavaScript</span>
-              <span class="chip">Cloud Services</span>
+              <span class="chip">Cloud Deployment</span>
             </div>
           </div>
 
@@ -78,6 +78,7 @@
             </div>
             <div class="button-row">
               <button class="ghost-button" @click="goNavigate('github')">GitHub</button>
+              <button class="ghost-button" @click="goNavigate('gitlab')">GitLab</button>
               <button class="ghost-button" @click="goNavigate('linkedin')">LinkedIn</button>
               <button class="ghost-button" @click="goNavigate('upwork')">Upwork</button>
               <button class="ghost-button" @click="goNavigate('facebook')">Facebook</button>
@@ -132,7 +133,7 @@
                     <span class="experience-role">Encoder / Image Editor (Part-time)</span>
                     <span class="experience-company">PIXEL Workshop · Cabadbaran City</span>
                   </div>
-                  <span class="experience-period">2023 – 2024</span>
+                  <span class="experience-period">April – August 2024</span>
                 </div>
                 <ul class="experience-bullets">
                   <li>Encoded barangay documents, resumes, and other official papers.</li>
@@ -156,8 +157,11 @@
                   <span class="certificate-badge">Docker & AWS</span>
                   <span class="certificate-date">2026</span>
                 </div>
-                <h3>Web System Deployment</h3>
+                <h3>Docker, Kubernetes & AWS: Real-World Deployment in 25 Days  | Udemy</h3>
+                <p style="font-weight: bold;">Instructors: Jannis Seemann, Andreas Kansy</p><br>
                 <p>Completed online course in Udemy for containerized deployment and scalable cloud hosting.</p>
+                <p>Length: 32 total hours</p>
+                <p>Date of Completion: July 3, 2026</p>
                 <div class="certificate-completion">
                   <div class="certificate-bar">
                     <div class="certificate-fill"></div>
@@ -316,6 +320,9 @@ export default {
     goNavigate(platform: string) {
       let url = '';
       switch (platform) {
+        case 'gitlab':
+          url = "https://gitlab.com/aurjohnmonte2003";
+          break;
         case 'github':
           url = 'https://github.com/aurjohnmonte';
           break;

@@ -21,13 +21,19 @@
           </div>
           <div>
             <h2>Inventory Monitoring System with QR-CODE Scan</h2>
-            <p class="project-subtitle">Web Application · Cloud Deployed</p>
+            <p class="project-subtitle">Web Application</p>
           </div>
         </div>
 
-        <div class="status-row">
+        <!-- <div class="status-row">
           <span class="status-dot"></span>
           <span class="status-text">Live</span>
+        </div> -->
+
+        <label class="screenshots-label">SYSTEM SCREENSHOTS</label>
+
+        <div class="screenshots-container">
+          <DisplaySystemPictures :system_name="'inventory-qr'" />
         </div>
 
         <div class="section-block">
@@ -100,7 +106,11 @@
 </template>
 
 <script lang="ts">
+
+import DisplaySystemPictures from './DisplaySystemPictures.vue';
+
 export default {
+  components: {DisplaySystemPictures},
   name: 'ECommerce',
   data() {
     return {

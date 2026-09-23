@@ -1,5 +1,6 @@
 <template>
   <div class="about-page" :class="{ 'about-page--maximized': isMaximized }">
+
     <div class="about-modal" :class="{ 'about-modal--maximized': isMaximized }">
       <div class="about-title-bar"
            @mousedown="startDrag"
@@ -17,14 +18,17 @@
       </div>
       <div class="about-card">
         <div class="about-header">
-          <div class="profile-circle">
-            <img src="../images/grad_pic.jpg" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%;">
+          <div class="profile-circle" style="cursor: pointer;" @click="showProfile()">
+            <img src="../images/profile-pic2.jpg" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%;">
           </div>
           <div class="profile-copy">
             <h2>Aurjohn Cris C. Monte</h2>
             <p class="profile-subtitle">Full Stack Web Developer | Cabadbaran, PH</p>
           </div>
-          <a class="cert-link" href="#" @click="$router.push('/?action=view-projects')">View My Projects</a>
+          <a class="cert-link" href="#" @click="$router.push('/?action=view-projects')">
+            View My Projects
+            <span class="cert-link-arrow">→</span>
+          </a>
         </div>
 
         <div class="about-body">
@@ -196,6 +200,7 @@ export default {
   name: 'AboutMe',
   data() {
     return {
+      showprofilepic: false,
       isDragging: false,
       hasMoved: false,
       startX: 0,       // add this
@@ -209,6 +214,9 @@ export default {
     }
   },
   methods: {
+    showProfile() {
+      this.$emit("showProfile");
+    },
     toggleMaximize() {
       this.isMaximized = !this.isMaximized;
       this.$emit('maximize', this.isMaximized);
@@ -355,6 +363,49 @@ export default {
 </script>
 
 <style scoped>
+
+.cert-link {
+  align-self: flex-start;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(90deg, #a356ff 0%, #7f50e8 100%);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 26px rgba(163, 86, 255, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: pulseLink 2.6s ease-in-out infinite;
+}
+
+.cert-link-arrow {
+  transition: transform 0.2s ease;
+}
+
+.cert-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(163, 86, 255, 0.42);
+  background: linear-gradient(90deg, #b06bff 0%, #8f5ff2 100%);
+}
+
+.cert-link:hover .cert-link-arrow {
+  transform: translateX(3px);
+}
+
+@keyframes pulseLink {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 10px 26px rgba(163, 86, 255, 0.3);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(163, 86, 255, 0.45);
+  }
+}
 .experience-list {
   display: flex;
   flex-direction: column;
@@ -584,7 +635,6 @@ export default {
   width: 96px;
   height: 96px;
   border-radius: 50%;
-  background: #d9d9d9;
   box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.08);
 }
 
@@ -606,20 +656,6 @@ export default {
   font-size: 0.95rem;
 }
 
-.cert-link {
-  align-self: flex-start;
-  padding: 10px 18px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: #a07bfd;
-  text-decoration: none;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-  animation: pulseLink 2.6s ease-in-out infinite;
-}
 
 .about-body {
   display: flex;
@@ -627,10 +663,6 @@ export default {
   gap: 26px;
 }
 
-.cert-link:hover {
-  background: rgba(160, 123, 253, 0.12);
-  transform: translateY(-1px);
-}
 
 .about-body {
   display: flex;

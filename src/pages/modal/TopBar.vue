@@ -1,14 +1,5 @@
 <template>
   <div class="topbar">
-    <!-- Left: Activities -->
-    <div class="topbar-left">
-      <button class="topbar-activities" @click="$emit('toggle-activities')">
-        <span class="activities-dot" />
-        <span class="activities-dot" />
-        <span class="activities-dot" />
-        <span class="topbar-label">Activities</span>
-      </button>
-    </div>
 
     <!-- Center: App title (optional slot) -->
     <div class="topbar-center">
@@ -17,6 +8,7 @@
 
     <!-- Right: Date + Time -->
     <div class="topbar-right">
+      
       <div class="topbar-datetime">
         <span class="topbar-date">{{ formattedDate }}</span>
         <span class="topbar-time">{{ formattedTime }}</span>

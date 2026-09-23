@@ -21,13 +21,19 @@
           </div>
           <div>
             <h2>E-Commerce System for Hand-made Products</h2>
-            <p class="project-subtitle">Web Application · Cloud Deployed</p>
+            <p class="project-subtitle">Web Application</p>
           </div>
         </div>
 
-        <div class="status-row">
+        <!-- <div class="status-row">
           <span class="status-dot"></span>
           <span class="status-text">Live</span>
+        </div> -->
+
+        <label class="screenshots-label">SYSTEM SCREENSHOTS</label>
+
+        <div class="screenshots-container">
+          <DisplaySystemPictures :system_name="'craftify'" />
         </div>
 
         <div class="section-block">
@@ -105,7 +111,11 @@
 </template>
 
 <script lang="ts">
+
+import DisplaySystemPictures from './DisplaySystemPictures.vue';
+
 export default {
+  components: {DisplaySystemPictures},
   name: 'ECommerce',
   data() {
     return {
@@ -226,6 +236,33 @@ export default {
 </script>
 
 <style scoped>
+.screenshots-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.screenshots-container {
+  width: 100%;
+  height: 90%;
+  margin-bottom: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.screenshots-container :deep(.pictures-main-container) {
+  width: 100%;
+  height: 100%;
+}
 .project-header {
   cursor: grab;
 }

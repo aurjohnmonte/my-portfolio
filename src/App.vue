@@ -1,6 +1,19 @@
 <template>
   <div class="desktop" @contextmenu.prevent="showContextMenu($event, true)">
 
+    <div
+      class="view-profile-pic"
+      v-show="showprofilepic"
+      @click.stop="showprofilepic = false"
+    >
+      <img
+        src="./images/profile-pic2.jpg"
+        alt="Profile Image"
+        class="profile-preview-image"
+        @click.stop
+      />
+    </div>
+
     <!-- Dialogs -->
     <NewFileDialog
       :visible="newFileDialog.visible"
@@ -59,7 +72,7 @@
         <transition name="modal-popup" mode="out-in" appear 
                     @before-leave="onModalBeforeLeave"
                     @after-leave="onModalAfterLeave">
-          <component :is="Component" @close="closeModal()" />
+          <component :is="Component" @close="closeModal()" @showProfile="showprofilepic = true"/>
         </transition>
       </router-view>
     </div>
@@ -239,6 +252,7 @@ export default {
   },
   data() {
     return {
+      showprofilepic: false,
       appLauncherVisible: false,
       selectedIconId: null as string | null,
       // context menu state
@@ -404,6 +418,65 @@ export default {
 </script>
 
 <style scoped>
+.view-profile-pic {
+  position: fixed;
+  inset: 0;
+  z-index: 9999999999999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 30px;
+
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(5px);
+
+  cursor: pointer;
+}
+
+.profile-preview-image {
+  width: min(70vw, 500px);
+  height: min(70vw, 500px);
+
+  max-width: 90vw;
+  max-height: 80vh;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+
+  cursor: default;
+
+  animation: profilePicAppear 0.25s ease-out;
+}
+
+@keyframes profilePicAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@media (max-width: 600px) {
+  .view-profile-pic {
+    padding: 20px;
+  }
+
+  .profile-preview-image {
+    width: 75vw;
+    height: 75vw;
+
+    max-width: 350px;
+    max-height: 350px;
+  }
+}
 /* ── new: full-screen backdrop for folder dialog ── */
 .dialog-backdrop-full {
   position: fixed;

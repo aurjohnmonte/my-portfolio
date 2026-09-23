@@ -21,19 +21,25 @@
           </div>
           <div>
             <h1>AI-Driven Survey System</h1>
-            <p class="project-subtitle">Web Application · Cloud Deployed</p>
+            <p class="project-subtitle">Web Application</p>
           </div>
         </div>
 
-        <div class="status-row">
+        <!-- <div class="status-row">
           <span class="status-dot"></span>
           <span class="status-text">Live</span>
-        </div>
+        </div> -->
+
+      <label class="screenshots-label">SYSTEM SCREENSHOTS</label>
+
+      <div class="screenshots-container">
+        <DisplaySystemPictures :system_name="'ai-driven'" />
+      </div>
 
         <div class="section-block">
           <div class="section-label">PROBLEM IT SOLVES</div>
           <p class="section-text">
-            Traditional survey platforms often struggle to maintain respondent engagement, leading to incomplete data and lower response rates. Manual analysis of open-ended responses — determining whether feedback is positive, neutral, or negative — is equally time-consuming and prone to human error. Furthermore, clients frequently find it difficult to identify which office to approach for their specific needs.
+            Traditional survey platforms often struggle to maintain respondent engagement, leading to incomplete data and lower response rates. Manual analysis of open-ended responses, determining whether feedback is positive, neutral, or negative is equally time-consuming and prone to human error. Furthermore, clients frequently find it difficult to identify which office to approach for their specific needs.
           </p>
         </div>
 
@@ -109,7 +115,11 @@
 </template>
 
 <script lang="ts">
+
+import DisplaySystemPictures from './DisplaySystemPictures.vue';
+
 export default {
+  components: {DisplaySystemPictures},
   name: 'AiDriven',
   data() {
     return {
@@ -230,6 +240,34 @@ export default {
 </script>
 
 <style scoped>
+
+.screenshots-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.screenshots-container {
+  width: 100%;
+  height: 90%;
+  margin-bottom: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.screenshots-container :deep(.pictures-main-container) {
+  width: 100%;
+  height: 100%;
+}
 
 .project-header {
   cursor: grab;

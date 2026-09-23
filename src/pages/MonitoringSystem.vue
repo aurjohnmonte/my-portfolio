@@ -231,6 +231,33 @@ export default {
 </script>
 
 <style scoped>
+.screenshots-label {
+  display: block;
+  width: 100%;
+  margin-bottom: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #888;
+}
+
+.screenshots-container {
+  width: 100%;
+  height: 90%;
+  margin-bottom: 30px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.screenshots-container :deep(.pictures-main-container) {
+  width: 100%;
+  height: 100%;
+}
 .project-header {
   cursor: grab;
 }

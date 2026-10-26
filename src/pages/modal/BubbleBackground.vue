@@ -153,7 +153,7 @@ function onClick(e: MouseEvent) {
   let hit = -1
   let best = Infinity
   for (let i = 0; i < bubbles.length; i++) {
-    const b = bubbles[i]
+    const b = bubbles[i]!
     const d = Math.hypot(b.x - cx, b.y - cy)
     if (d <= b.r + POP_PADDING && d < best) {
       best = d
@@ -162,7 +162,7 @@ function onClick(e: MouseEvent) {
   }
   if (hit === -1) return
 
-  spawnPop(bubbles[hit])
+  spawnPop(bubbles[hit]!)
   bubbles[hit] = createBubble(false)   // respawn from the bottom
 }
 
@@ -177,6 +177,8 @@ function frame(now: number) {
 
   for (let i = 0; i < bubbles.length; i++) {
     const b = bubbles[i]
+
+    if(!b) return;
 
     const dx = b.x - mouse.x
     const dy = b.y - mouse.y
@@ -199,7 +201,7 @@ function frame(now: number) {
     else if (b.x < -b.r * 2) b.x = w + b.r
     else if (b.x > w + b.r * 2) b.x = -b.r
 
-    draw(bubbles[i])
+    draw(bubbles[i]!)
   }
 
   drawPops(dt)

@@ -116,9 +116,9 @@ function drawLayer(layer: Layer, time: number, dt: number) {
       right.push(cx + half, cy)
     }
 
-    ctx.moveTo(left[0], left[1])
-    for (let i = 2; i < left.length; i += 2) ctx.lineTo(left[i], left[i + 1])
-    for (let i = right.length - 2; i >= 0; i -= 2) ctx.lineTo(right[i], right[i + 1])
+    ctx.moveTo(left[0]!, left[1]!)
+    for (let i = 2; i < left.length; i += 2) ctx.lineTo(left[i]!, left[i + 1]!)
+    for (let i = right.length - 2; i >= 0; i -= 2) ctx.lineTo(right[i]!, right[i + 1]!)
     ctx.closePath()
   }
 

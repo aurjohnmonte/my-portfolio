@@ -137,6 +137,10 @@ function frame(now: number) {
   for (let i = 0; i < fishes.length; i++) {
     const f = fishes[i]
 
+    if(!f) {
+        return;
+    }
+
     // startle: dart away from the cursor
     const dx = f.x - mouse.x
     const dy = f.y - mouse.y

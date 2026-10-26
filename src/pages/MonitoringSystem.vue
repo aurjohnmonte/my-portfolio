@@ -367,7 +367,6 @@ export default {
   font-family: var(--font-body);
   pointer-events: none;
   min-height: 100vh;
-  width: 100%;
   display: flex;
   justify-content: center;
   margin-top: 50px;

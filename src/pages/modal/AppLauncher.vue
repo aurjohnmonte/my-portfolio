@@ -66,6 +66,12 @@ export default defineComponent({
 
     const apps: AppItem[] = [
       {
+        id: 'matacbr-app',
+        label: 'MataCBR Mobile App',
+        icon: new URL('../../images/matacbr/logo.png', import.meta.url).href,
+        action: () => router.push('/matacbr-app?action=matacbr'),
+      },
+      {
         id: 'ai-driven',
         label: 'AI-Driven Survey System',
         icon: new URL('../../images/csucc.png', import.meta.url).href,

@@ -111,7 +111,17 @@
     </transition>
 
     <div class="wallpaper"></div>
+
+    <BubbleBackground /> 
+    <SeagrassBackground />
+    <FishBackground />
+
     <TopBar @toggle-activities="$emit('toggle-activities')" />
+
+    <div class="tagline">
+      <p class="tagline-main">I stay steady under pressure.</p>
+      <p class="tagline-sub">Deep water doesn't scare me. I just keep building.</p>
+    </div>
 
     <aside class="launcher">
       <div class="launcher-icon app-launcher" style="margin-right: 30px;" @click="appLauncherVisible = true">
@@ -124,7 +134,7 @@
         <img src="./images/html.png" alt="AI Icon" class="launcher-icon-img" @click="$router.push('/about')">
       </div>
       <div class="launcher-icon icon-app">
-        <img src="./images/ghost.png" alt="AI Icon" class="launcher-icon-img" @click="$router.push('/about')">
+        <img src="./images/terminal.png" alt="AI Icon" class="launcher-icon-img">
       </div>
     </aside>
 
@@ -166,14 +176,14 @@
       </div>
       <div
         class="desktop-icon project-icon"
-        :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('queueing') }"
+        :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('matacbr') }"
         @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/real-time-queueing-system?action=queueing')"
+        @click="$router.push('/matacbr-app?action=matacbr')"
       >
         <div class="icon-circle">
-          <img src="./images/line.png" alt="AI Icon" class="icon-img">
+          <img src="./images/matacbr/logo.png" alt="AI Icon" class="icon-img">
         </div>
-        <span>Real-time<br> Queueing<br> System</span>
+        <span>MataCBR <br> Mobile App</span>
       </div>
       <div
         class="desktop-icon project-icon"
@@ -239,6 +249,9 @@ import NewFileDialog from './pages/NewFileDialog.vue'
 import FolderWindow from './pages/FolderWindow.vue'
 import TopBar from './pages/modal/TopBar.vue'
 import AppLauncher from './pages/modal/AppLauncher.vue'
+import BubbleBackground from './pages/modal/BubbleBackground.vue'
+import SeagrassBackground from './pages/modal/SeagrassBackground.vue'
+import FishBackground from './pages/modal/FishBackground.vue'
 
 export default {
   name: 'App',
@@ -248,7 +261,10 @@ export default {
     TextEditor,
     FolderWindow,
     TopBar,
-    AppLauncher
+    AppLauncher,
+    BubbleBackground,
+    SeagrassBackground,
+    FishBackground
   },
   data() {
     return {
@@ -418,6 +434,45 @@ export default {
 </script>
 
 <style scoped>
+.tagline {
+  position: absolute;
+  top: 80px;
+  right: 28px;
+  max-width: 280px;
+  text-align: right;
+  z-index: 10;
+  pointer-events: none;  /* never blocks clicks */
+  font-family: 'Ubuntu', Inter, system-ui, sans-serif;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  animation: taglineIn 1.2s ease-out 0.6s both;
+}
+
+.tagline-main {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.tagline-sub {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: rgba(210, 180, 255, 0.8);
+}
+
+@keyframes taglineIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .tagline { display: none; }  /* icons take the space on phones */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagline { animation: none; }
+}
 .view-profile-pic {
   position: fixed;
   inset: 0;
@@ -686,7 +741,7 @@ export default {
   display: flex;
   flex-direction: row;
   gap: 25px;
-  background: rgba(17, 14, 14, 0.55);
+  background: rgba(17, 14, 14, 0.755);
   border-radius: 15px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
   z-index: 10;

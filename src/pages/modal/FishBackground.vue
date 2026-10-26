@@ -60,7 +60,7 @@ function createFish(initial: boolean): Fish {
     phase: rand(0, Math.PI * 2),
     vy: 0,
     boost: 1,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    color: COLORS[Math.floor(Math.random() * COLORS.length)]!,
     alpha: 0.45 + depth * 0.45, // far fish are fainter
   }
 }

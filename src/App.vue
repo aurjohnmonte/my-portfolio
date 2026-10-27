@@ -112,11 +112,15 @@
 
     <div class="wallpaper"></div>
 
-    <BubbleBackground /> 
-    <SeagrassBackground />
-    <FishBackground />
+    <BubbleBackground v-if="animationsEnabled" />
+    <SeagrassBackground v-if="animationsEnabled" />
+    <FishBackground v-if="animationsEnabled" />
 
-    <TopBar @toggle-activities="$emit('toggle-activities')" />
+    <TopBar
+      :animations-enabled="animationsEnabled"
+      @toggle-activities="$emit('toggle-activities')"
+      @toggle-animations="toggleAnimations"
+    />
 
     <div class="tagline">
       <p class="tagline-main">I stay steady under pressure.</p>
@@ -269,6 +273,9 @@ export default {
   data() {
     return {
       showprofilepic: false,
+      animationsEnabled: (() => {
+        try { return localStorage.getItem('bgAnimations') !== 'off' } catch { return true }
+      })(),
       appLauncherVisible: false,
       selectedIconId: null as string | null,
       // context menu state
@@ -296,6 +303,10 @@ export default {
     },
   },
   methods: {
+    toggleAnimations() {
+      this.animationsEnabled = !this.animationsEnabled
+      try { localStorage.setItem('bgAnimations', this.animationsEnabled ? 'on' : 'off') } catch {}
+    },
     onModalBeforeLeave(el: Element) {
       const modal = el.querySelector('.about-modal') as HTMLElement
       if (!modal) return
@@ -436,29 +447,62 @@ export default {
 <style scoped>
 .tagline {
   position: absolute;
-  top: 80px;
-  right: 28px;
-  max-width: 280px;
-  text-align: right;
+  top: 70px;
+  right: 24px;
+  width: 180px;
+  padding: 16px 14px 14px;
+  text-align: left;
   z-index: 10;
   pointer-events: none;  /* never blocks clicks */
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(135deg, #e3d3ff 0%, #c9aaf7 100%);
+  color: #2a1745;
+  border-radius: 2px;
+  transform: rotate(2deg);
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.45),
+    0 2px 4px rgba(0, 0, 0, 0.3);
   animation: taglineIn 1.2s ease-out 0.6s both;
 }
 
+/* tape */
+.tagline::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 16px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(2px);
+}
+
+/* folded corner */
+.tagline::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  background: linear-gradient(135deg, transparent 50%, rgba(70, 25, 130, 0.35) 50%);
+}
+
 .tagline-main {
-  margin: 0 0 6px;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #2a1745;
 }
 
 .tagline-sub {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   line-height: 1.4;
-  color: rgba(210, 180, 255, 0.8);
+  color: rgba(42, 23, 69, 0.75);
 }
 
 @keyframes taglineIn {

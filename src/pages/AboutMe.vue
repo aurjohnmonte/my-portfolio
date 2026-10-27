@@ -354,7 +354,7 @@
               <span class="section-label">CERTIFICATES</span>
 
               <span class="certificate-status">
-                1 completed
+                3 completed
               </span>
             </div>
 

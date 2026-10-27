@@ -1,6 +1,27 @@
 <template>
   <div class="topbar">
 
+    <!-- Left: Animation toggle -->
+  <div class="topbar-left">
+    <button
+      class="tray-icon anim-toggle"
+      :class="{ 'is-off': !animationsEnabled }"
+      :title="animationsEnabled ? 'Turn off background animation' : 'Turn on background animation'"
+      :aria-pressed="animationsEnabled"
+      @click="$emit('toggle-animations')"
+    >
+      <!-- animations ON: pause icon -->
+      <svg v-if="animationsEnabled" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="6" y="4" width="4" height="16" rx="1"/>
+        <rect x="14" y="4" width="4" height="16" rx="1"/>
+      </svg>
+      <!-- animations OFF: play icon -->
+      <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/>
+      </svg>
+    </button>
+  </div>
+
     <!-- Center: App title (optional slot) -->
     <div class="topbar-center">
       <slot name="app-title" />
@@ -38,7 +59,10 @@
 <script>
 export default {
   name: 'TopBar',
-  emits: ['toggle-activities'],
+  props: {
+    animationsEnabled: { type: Boolean, default: true },
+  },
+  emits: ['toggle-activities', 'toggle-animations'],
 
   data() {
     return {
@@ -81,6 +105,29 @@ export default {
 </script>
 
 <style scoped>
+/* ── Animation toggle ── */
+.anim-toggle {
+  width: 28px;
+  height: 28px;
+  margin-right: 2px;
+  color: rgba(210, 180, 255, 0.85);
+  background: rgba(111, 25, 216, 0.18);
+  border: 1px solid rgba(163, 86, 255, 0.35);
+  border-radius: 50%;
+}
+.anim-toggle:hover {
+  background: rgba(136, 39, 255, 0.35);
+  color: #fff;
+}
+.anim-toggle.is-off {
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.anim-toggle.is-off:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+}
 .topbar {
   position: absolute;
   top: 0; left: 0; right: 0;

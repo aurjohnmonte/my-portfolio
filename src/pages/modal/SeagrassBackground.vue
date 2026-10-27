@@ -23,18 +23,18 @@ interface Layer {
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 
 // ── Tweak these ──────────────────────────────
-const SEGMENTS = 8            // smoothness of each blade (higher = smoother, heavier)
-const BLADE_SPACING = 11      // px between blades per layer (higher = fewer blades)
-const MAX_BLADES = 180        // hard cap across all layers
-const WIND = 10               // constant lean (px at tip), gives a gentle current
-const PUSH_RADIUS = 110       // how close the cursor must be to bend grass
-const PUSH_FORCE = 45         // how far grass bends away from the cursor
-const HEIGHT_RATIO = 1        // set to 0.7 for shorter grass, 1.3 for taller
+const SEGMENTS = 6
+const BLADE_SPACING = 11
+const MAX_BLADES = 180
+const WIND = 3                // gentler lean
+const PUSH_RADIUS = 90
+const PUSH_FORCE = 22
+const HEIGHT_RATIO = 1
 // back → front: [min height, max height, top color, bottom color]
 const LAYERS: [number, number, string, string][] = [
-  [90, 170, 'rgba(46, 160, 150, 0.40)', 'rgba(14, 70, 90, 0.55)'],
-  [60, 140, 'rgba(70, 200, 150, 0.55)', 'rgba(18, 95, 95, 0.70)'],
-  [40, 105, 'rgba(120, 235, 160, 0.70)', 'rgba(22, 120, 100, 0.85)'],
+  [34, 62, 'rgba(46, 160, 150, 0.40)', 'rgba(14, 70, 90, 0.55)'],
+  [24, 48, 'rgba(70, 200, 150, 0.55)', 'rgba(18, 95, 95, 0.70)'],
+  [16, 36, 'rgba(120, 235, 160, 0.70)', 'rgba(22, 120, 100, 0.85)'],
 ]
 // ─────────────────────────────────────────────
 
@@ -64,10 +64,10 @@ function build() {
       // evenly spread with jitter so it looks natural, not like a comb
       x: ((i + rand(0.1, 0.9)) / perLayer) * (w + 40) - 20,
       height: rand(minH, maxH) * HEIGHT_RATIO,
-      width: rand(5, 11),
+      width: rand(9, 15),
       phase: rand(0, Math.PI * 2),
       speed: rand(0.6, 1.3),
-      amp: rand(6, 16),
+      amp: rand(2, 6),
       push: 0,
     }))
     return { blades, fill: grad }
@@ -111,14 +111,25 @@ function drawLayer(layer: Layer, time: number, dt: number) {
       const sway = Math.sin(t0 + t * 1.6) * b.amp + WIND + b.push
       const cx = b.x + sway * bend
       const cy = h - t * b.height
-      const half = (b.width / 2) * Math.pow(1 - t, 0.75) // taper to a point
+      const half = (b.width / 2) * (1 - 0.6 * Math.pow(t, 2)) // stays wide, blunt tip
       left.push(cx - half, cy)
       right.push(cx + half, cy)
     }
 
     ctx.moveTo(left[0]!, left[1]!)
     for (let i = 2; i < left.length; i += 2) ctx.lineTo(left[i]!, left[i + 1]!)
-    for (let i = right.length - 2; i >= 0; i -= 2) ctx.lineTo(right[i]!, right[i + 1]!)
+
+    // rounded cap across the tip instead of a sharp point
+    const n = left.length
+    const tipW = right[n - 2]! - left[n - 2]!
+    ctx.quadraticCurveTo(
+      (left[n - 2]! + right[n - 2]!) / 2,
+      left[n - 1]! - tipW * 0.9,
+      right[n - 2]!,
+      right[n - 1]!,
+    )
+
+    for (let i = right.length - 4; i >= 0; i -= 2) ctx.lineTo(right[i]!, right[i + 1]!)
     ctx.closePath()
   }
 
@@ -200,12 +211,12 @@ onBeforeUnmount(() => {
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 220px;          /* only the bottom strip is drawn = cheap */
+  height: 90px;          /* only the bottom strip is drawn = cheap */
   z-index: 2;             /* above bubbles (1), below icons/launcher/topbar (10) */
   pointer-events: none;   /* never blocks clicks or right-click */
 }
 
 @media (max-width: 768px) {
-  .seagrass-bg { height: 160px; }
+  .seagrass-bg { height: 70px; }
 }
 </style>

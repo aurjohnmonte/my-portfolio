@@ -7,6 +7,7 @@ import QR_based_system from '../pages/MonitoringSystem.vue'
 import Queueing_system from '../pages/QueueingSystem.vue'
 import File_Explorer from '@/pages/File_Explorer.vue'
 import MataCbrApp from '@/pages/MataCbrApp.vue'
+import Terminal from '@/pages/Terminal.vue'
 
 
 
@@ -47,6 +48,11 @@ const router = createRouter({
       path: '/matacbr-app',
       name: 'MataCbrApp',
       component: MataCbrApp
+    },
+    {
+      path: '/terminal',
+      name: 'Terminal',
+      component: Terminal
     }
   ],
 })

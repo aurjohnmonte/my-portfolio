@@ -160,6 +160,16 @@ export default {
                                         }
                                     );
             break;
+        
+        case "matacbr":
+            this.screenshotModules = import.meta.glob(
+                                        "../images/matacbr/*.jpg",
+                                        {
+                                        eager: true,
+                                        import: "default"
+                                        }
+                                    );
+            break;                         
 
         default:
 

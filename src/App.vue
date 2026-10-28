@@ -1,40 +1,21 @@
 <template>
   <div class="desktop" @contextmenu.prevent="showContextMenu($event, true)">
 
-    <div
-      class="view-profile-pic"
-      v-show="showprofilepic"
-      @click.stop="showprofilepic = false"
-    >
-      <img
-        src="./images/profile-pic2.jpg"
-        alt="Profile Image"
-        class="profile-preview-image"
-        @click.stop
-      />
+    <div class="view-profile-pic" v-show="showprofilepic" @click.stop="showprofilepic = false">
+      <img src="./images/profile-pic2.jpg" alt="Profile Image" class="profile-preview-image" @click.stop />
     </div>
 
     <!-- Dialogs -->
-    <NewFileDialog
-      :visible="newFileDialog.visible"
-      @confirm="onFileCreated"
-      @cancel="newFileDialog.visible = false"
-      @contextmenu.prevent.stop
-    />
+    <NewFileDialog :visible="newFileDialog.visible" @confirm="onFileCreated" @cancel="newFileDialog.visible = false"
+      @contextmenu.prevent.stop />
 
     <!-- New Folder Dialog (desktop-level) -->
     <transition name="context-fade">
       <div v-if="newFolderDialog.visible" class="dialog-backdrop-full" @click.self="newFolderDialog.visible = false">
         <div class="dialog-box">
           <p class="dialog-title">New Folder</p>
-          <input
-            ref="folderInputRef"
-            v-model="newFolderDialog.name"
-            class="dialog-input"
-            placeholder="folder name"
-            @keydown.enter="onFolderCreated"
-            @keydown.esc="newFolderDialog.visible = false"
-          />
+          <input ref="folderInputRef" v-model="newFolderDialog.name" class="dialog-input" placeholder="folder name"
+            @keydown.enter="onFolderCreated" @keydown.esc="newFolderDialog.visible = false" />
           <div class="dialog-actions">
             <button class="btn-cancel" @click="newFolderDialog.visible = false">Cancel</button>
             <button class="btn-confirm" @click="onFolderCreated">Create</button>
@@ -43,48 +24,27 @@
       </div>
     </transition>
 
-    <TextEditor
-      v-if="openedFile"
-      :file="openedFile"
-      @close="openedFile = null"
-      @contextmenu.prevent.stop
-    />
+    <TextEditor v-if="openedFile" :file="openedFile" @close="openedFile = null" @contextmenu.prevent.stop />
 
-    <AppLauncher
-      :visible="appLauncherVisible"
-      @close="appLauncherVisible = false"
-      @contextmenu.prevent.stop
-    />
+    <AppLauncher :visible="appLauncherVisible" @close="appLauncherVisible = false" @contextmenu.prevent.stop />
 
     <!-- Folder windows (desktop level) -->
-    <FolderWindow
-      v-for="f in openFolderWindows"
-      :key="f.id"
-      :folder="f"
-      :visible="true"
-      :z-base="120 + openFolderWindows.indexOf(f) * 5"
-      @close="closeFolderWindow(f.id)"
-      @open-file="openFile"
-    />
+    <FolderWindow v-for="f in openFolderWindows" :key="f.id" :folder="f" :visible="true"
+      :z-base="120 + openFolderWindows.indexOf(f) * 5" @close="closeFolderWindow(f.id)" @open-file="openFile" />
 
     <div class="content-modal">
       <router-view v-slot="{ Component }" @contextmenu.prevent.stop>
-        <transition name="modal-popup" mode="out-in" appear 
-                    @before-leave="onModalBeforeLeave"
-                    @after-leave="onModalAfterLeave">
-          <component :is="Component" @close="closeModal()" @showProfile="showprofilepic = true"/>
+        <transition name="modal-popup" mode="out-in" appear @before-leave="onModalBeforeLeave"
+          @after-leave="onModalAfterLeave">
+          <component :is="Component" @close="closeModal()" @showProfile="showprofilepic = true" />
         </transition>
       </router-view>
     </div>
 
     <!-- Right-click Context Menu -->
     <transition name="context-fade">
-      <div
-        v-if="contextMenu.visible"
-        class="context-menu"
-        :style="{ top: contextMenu.y + 'px', left: contextMenu.x + 'px' }"
-        @click.stop
-      >
+      <div v-if="contextMenu.visible" class="context-menu"
+        :style="{ top: contextMenu.y + 'px', left: contextMenu.x + 'px' }" @click.stop>
         <div class="context-menu-item" @click="handleContextAction('new-folder')" style="display: none;">
           <span class="ctx-icon">📁</span>
           <span>New Folder</span>
@@ -99,11 +59,8 @@
           <span>Refresh</span>
         </div>
         <div class="context-menu-divider"></div>
-        <div
-          class="context-menu-item danger"
-          :class="{ 'disabled-delete': contextMenu.disabled_delete }"
-          @click="handleContextAction('delete')"
-        >
+        <div class="context-menu-item danger" :class="{ 'disabled-delete': contextMenu.disabled_delete }"
+          @click="handleContextAction('delete')">
           <span class="ctx-icon">🗑️</span>
           <span>Delete</span>
         </div>
@@ -116,11 +73,8 @@
     <SeagrassBackground v-if="animationsEnabled" />
     <FishBackground v-if="animationsEnabled" />
 
-    <TopBar
-      :animations-enabled="animationsEnabled"
-      @toggle-activities="$emit('toggle-activities')"
-      @toggle-animations="toggleAnimations"
-    />
+    <TopBar :animations-enabled="animationsEnabled" @toggle-activities="$emit('toggle-activities')"
+      @toggle-animations="toggleAnimations" />
 
     <div class="tagline">
       <p class="tagline-main">I stay steady under pressure.</p>
@@ -138,75 +92,59 @@
         <img src="./images/html.png" alt="AI Icon" class="launcher-icon-img" @click="$router.push('/about')">
       </div>
       <div class="launcher-icon icon-app">
-        <img src="./images/terminal.png" alt="AI Icon" class="launcher-icon-img">
+        <img src="./images/terminal.png" alt="AI Icon" class="launcher-icon-img" @click="$router.push('/terminal')">
       </div>
     </aside>
 
     <section class="desktop-icons">
       <!-- Fixed project icons -->
-      <div
-        class="desktop-icon project-icon"
+      <div class="desktop-icon project-icon"
         :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('ai-driven') }"
         @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/ai-driven-system?action=ai-driven')"
-      >
+        @click="$router.push('/ai-driven-system?action=ai-driven')">
         <div class="icon-circle">
           <img src="./images/csucc.png" alt="AI Icon" class="icon-img">
         </div>
         <span>AI-Driven<br> Survey System</span>
       </div>
-      <div
-        class="desktop-icon project-icon"
+      <div class="desktop-icon project-icon"
         :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('e-commerce') }"
         @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/e-commerce-system?action=e-commerce')"
-      >
+        @click="$router.push('/e-commerce-system?action=e-commerce')">
         <div class="icon-circle">
           <img src="./images/Logo-3.png" alt="AI Icon" class="icon-img">
         </div>
         <span>E-Commerce<br> System</span>
       </div>
 
-      <div
-        class="desktop-icon project-icon"
+      <div class="desktop-icon project-icon"
         :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('inventory') }"
         @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/qr-based-monitoring-system?action=inventory')"
-      >
+        @click="$router.push('/qr-based-monitoring-system?action=inventory')">
         <div class="icon-circle">
           <img src="./images/csu.png" alt="AI Icon" class="icon-img">
         </div>
         <span>QR-Based<br> Inventory <br>Monitoring</span>
       </div>
-      <div
-        class="desktop-icon project-icon"
+      <div class="desktop-icon project-icon"
         :class="{ 'pulse-project-icon': isProjectView, 'selected-icon': isIconSelected('matacbr') }"
-        @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/matacbr-app?action=matacbr')"
-      >
+        @contextmenu.stop.prevent="showContextMenu($event, true)" @click="$router.push('/matacbr-app?action=matacbr')">
         <div class="icon-circle">
-          <img src="./images/matacbr/logo.png" alt="AI Icon" class="icon-img">
+          <img src="./images/matacbr-logo.png" alt="AI Icon" class="icon-img">
         </div>
         <span>MataCBR <br> Mobile App</span>
       </div>
-      <div
-        class="desktop-icon project-icon"
-        :class="{ 'selected-icon': isIconSelected('about-me') }"
-        @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/about?action=about-me')"
-      >
+      <div class="desktop-icon project-icon" :class="{ 'selected-icon': isIconSelected('about-me') }"
+        @contextmenu.stop.prevent="showContextMenu($event, true)" @click="$router.push('/about?action=about-me')">
         <div class="icon-circle">
           <img src="./images/html.png" alt="Projects Icon" class="icon-img">
         </div>
         <span>About Me</span>
       </div>
 
-      <div
-        class="desktop-icon project-icon"
-        :class="{ 'selected-icon': isIconSelected('my-life-so-far') }"
+      <div class="desktop-icon project-icon" :class="{ 'selected-icon': isIconSelected('my-life-so-far') }"
         @contextmenu.stop.prevent="showContextMenu($event, true)"
-        @click="$router.push('/file-explorer?path=my%20life%20so%20far&action=my-life-so-far')"
-      >
+        @click="$router.push('/file-explorer?path=my%20life%20so%20far&action=my-life-so-far')">
         <div class="icon-circle">
           <img src="./images/folder.png" alt="Projects Icon" class="icon-img">
         </div>
@@ -214,13 +152,9 @@
       </div>
 
       <!-- Dynamic folder icons (desktop level) -->
-      <div
-        v-for="folder in desktopStore.desktopFolders"
-        :key="folder.id"
-        class="desktop-icon project-icon"
+      <div v-for="folder in desktopStore.desktopFolders" :key="folder.id" class="desktop-icon project-icon"
         @contextmenu.stop.prevent="showContextMenu($event, false, folder.id, 'folder')"
-        @click="openFolderWindow(folder)"
-      >
+        @click="openFolderWindow(folder)">
         <div class="icon-circle folder-icon-circle">
           <img src="./images/folder.png" alt="Folder Icon" class="icon-img">
         </div>
@@ -228,13 +162,8 @@
       </div>
 
       <!-- Dynamic text file icons -->
-      <div
-        v-for="file in desktopStore.desktopFiles"
-        :key="file.id"
-        class="desktop-icon project-icon"
-        @contextmenu.stop.prevent="showContextMenu($event, false, file.id, 'file')"
-        @click="openFile(file)"
-      >
+      <div v-for="file in desktopStore.desktopFiles" :key="file.id" class="desktop-icon project-icon"
+        @contextmenu.stop.prevent="showContextMenu($event, false, file.id, 'file')" @click="openFile(file)">
         <div class="icon-circle">
           <img src="./images/txt.png" alt="Projects Icon" class="icon-img">
         </div>
@@ -305,7 +234,7 @@ export default {
   methods: {
     toggleAnimations() {
       this.animationsEnabled = !this.animationsEnabled
-      try { localStorage.setItem('bgAnimations', this.animationsEnabled ? 'on' : 'off') } catch {}
+      try { localStorage.setItem('bgAnimations', this.animationsEnabled ? 'on' : 'off') } catch { }
     },
     onModalBeforeLeave(el: Element) {
       const modal = el.querySelector('.about-modal') as HTMLElement
@@ -453,7 +382,8 @@ export default {
   padding: 16px 14px 14px;
   text-align: left;
   z-index: 10;
-  pointer-events: none;  /* never blocks clicks */
+  pointer-events: none;
+  /* never blocks clicks */
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
   background: linear-gradient(135deg, #e3d3ff 0%, #c9aaf7 100%);
   color: #2a1745;
@@ -506,17 +436,31 @@ export default {
 }
 
 @keyframes taglineIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
-  .tagline { display: none; }  /* icons take the space on phones */
+  .tagline {
+    display: none;
+  }
+
+  /* icons take the space on phones */
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tagline { animation: none; }
+  .tagline {
+    animation: none;
+  }
 }
+
 .view-profile-pic {
   position: fixed;
   inset: 0;
@@ -563,6 +507,7 @@ export default {
     transform: scale(1);
   }
 }
+
 @media (max-width: 600px) {
   .view-profile-pic {
     padding: 20px;
@@ -576,12 +521,13 @@ export default {
     max-height: 350px;
   }
 }
+
 /* ── new: full-screen backdrop for folder dialog ── */
 .dialog-backdrop-full {
   position: fixed;
   inset: 0;
   z-index: 9998;
-  background: rgba(0,0,0,0.30);
+  background: rgba(0, 0, 0, 0.30);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -592,11 +538,11 @@ export default {
   z-index: 9999;
   background: rgba(28, 26, 30, 0.95);
   backdrop-filter: blur(18px);
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 20px;
   width: 280px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -604,14 +550,14 @@ export default {
 
 .dialog-title {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.7);
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
 }
 
 .dialog-input {
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   padding: 8px 10px;
   color: #fff;
@@ -622,7 +568,9 @@ export default {
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
 }
 
-.dialog-input:focus { border-color: rgba(136, 39, 255, 0.7); }
+.dialog-input:focus {
+  border-color: rgba(136, 39, 255, 0.7);
+}
 
 .dialog-actions {
   display: flex;
@@ -632,9 +580,9 @@ export default {
 
 .btn-cancel {
   background: transparent;
-  border: 1px solid rgba(255,255,255,0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
-  color: rgba(255,255,255,0.6);
+  color: rgba(255, 255, 255, 0.6);
   padding: 6px 14px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -652,7 +600,9 @@ export default {
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
 }
 
-.btn-confirm:hover { background: rgba(136, 39, 255, 0.95); }
+.btn-confirm:hover {
+  background: rgba(136, 39, 255, 0.95);
+}
 
 /* ── folder icon circle tint ── */
 .folder-icon-circle {
@@ -677,7 +627,7 @@ export default {
   border-radius: 10px;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.55),
-    0 1px 0 rgba(255,255,255,0.06) inset;
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
   padding: 5px;
   user-select: none;
   overflow: hidden;
@@ -697,11 +647,24 @@ export default {
   letter-spacing: 0.01em;
 }
 
-.context-menu-item:hover { background: rgba(255, 255, 255, 0.10); }
-.context-menu-item.danger { color: #ff6b6b; }
-.context-menu-item.danger:hover { background: rgba(255, 80, 80, 0.14); }
+.context-menu-item:hover {
+  background: rgba(255, 255, 255, 0.10);
+}
 
-.ctx-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+.context-menu-item.danger {
+  color: #ff6b6b;
+}
+
+.context-menu-item.danger:hover {
+  background: rgba(255, 80, 80, 0.14);
+}
+
+.ctx-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
 
 .context-menu-divider {
   height: 1px;
@@ -709,10 +672,23 @@ export default {
   margin: 4px 0;
 }
 
-.context-fade-enter-active { transition: opacity 0.12s ease, transform 0.12s ease; }
-.context-fade-leave-active { transition: opacity 0.08s ease, transform 0.08s ease; }
-.context-fade-enter-from   { opacity: 0; transform: scale(0.95) translateY(-4px); }
-.context-fade-leave-to     { opacity: 0; transform: scale(0.95); }
+.context-fade-enter-active {
+  transition: opacity 0.12s ease, transform 0.12s ease;
+}
+
+.context-fade-leave-active {
+  transition: opacity 0.08s ease, transform 0.08s ease;
+}
+
+.context-fade-enter-from {
+  opacity: 0;
+  transform: scale(0.95) translateY(-4px);
+}
+
+.context-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
 
 .selected-icon .icon-circle {
   border: 2px solid rgba(111, 25, 216, 0.9);
@@ -720,11 +696,23 @@ export default {
   animation: selectedPulse 2.8s ease-in-out infinite;
 }
 
-.selected-icon span { color: #ffffff; font-weight: 700; }
+.selected-icon span {
+  color: #ffffff;
+  font-weight: 700;
+}
 
 @keyframes selectedPulse {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(163, 86, 255, 0.08); }
-  50%       { transform: scale(1.02); box-shadow: 0 0 0 9px rgba(163, 86, 255, 0.08); }
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 4px rgba(163, 86, 255, 0.08);
+  }
+
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 9px rgba(163, 86, 255, 0.08);
+  }
 }
 
 .content-modal {
@@ -737,8 +725,15 @@ export default {
   pointer-events: none;
 }
 
-.icon-img           { width: 40px; height: 40px; }
-.launcher-icon-img  { width: 40px; height: 40px; }
+.icon-img {
+  width: 40px;
+  height: 40px;
+}
+
+.launcher-icon-img {
+  width: 40px;
+  height: 40px;
+}
 
 .desktop {
   position: relative;
@@ -760,7 +755,9 @@ export default {
 
 .topbar {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: 42px;
   display: flex;
   align-items: center;
@@ -773,7 +770,11 @@ export default {
 }
 
 .topbar-label,
-.topbar-clock { font-size: 0.95rem; letter-spacing: 0.04em; margin-left: 20px; }
+.topbar-clock {
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  margin-left: 20px;
+}
 
 .launcher {
   position: absolute;
@@ -818,6 +819,7 @@ export default {
     left: 12px;
     top: 80px;
   }
+
   .launcher {
     bottom: 10vh;
   }
@@ -835,22 +837,44 @@ export default {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.desktop-icon:hover { transform: scale(1.05); }
-.desktop-icon:hover .icon-circle { box-shadow: 0 18px 40px rgba(255, 255, 255, 0.12); }
+.desktop-icon:hover {
+  transform: scale(1.05);
+}
 
-.pulse-project-icon .icon-circle { animation: pulseIcon 2s ease-in-out infinite; }
+.desktop-icon:hover .icon-circle {
+  box-shadow: 0 18px 40px rgba(255, 255, 255, 0.12);
+}
+
+.pulse-project-icon .icon-circle {
+  animation: pulseIcon 2s ease-in-out infinite;
+}
 
 @keyframes pulseIcon {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(162, 86, 255, 0.887); }
-  50%       { transform: scale(1.5); box-shadow: 0 18px 40px rgba(162, 86, 255, 0.637); }
+
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(162, 86, 255, 0.887);
+  }
+
+  50% {
+    transform: scale(1.5);
+    box-shadow: 0 18px 40px rgba(162, 86, 255, 0.637);
+  }
 }
 
 .modal-popup-enter-active,
-.modal-popup-leave-active { transition: opacity 0.25s ease; }
+.modal-popup-leave-active {
+  transition: opacity 0.25s ease;
+}
 
 .modal-popup-enter-from,
-.modal-popup-leave-to { opacity: 0; }
+.modal-popup-leave-to {
+  opacity: 0;
+}
 
 .modal-popup-enter-to,
-.modal-popup-leave-from { opacity: 1; }
+.modal-popup-leave-from {
+  opacity: 1;
+}
 </style>

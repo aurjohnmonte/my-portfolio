@@ -47,7 +47,7 @@
             <section class="content-section" data-section="overview">
               <div class="hero">
                 <div class="hero-icon">
-                  <img src="../images/matacbr/logo.png" alt="Project icon" class="project-icon" />
+                  <img src="../images/matacbr-logo.png" alt="Project icon" class="project-icon" />
                 </div>
                 <div class="hero-copy">
                   <h1>MataCBR</h1>

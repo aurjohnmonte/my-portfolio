@@ -338,7 +338,7 @@ export default {
       window.open('https://github.com/aurjohnmonte/Inventory_Monitoring_QRCODE', '_blank')
     },
     goToLive() {
-      window.open("https://qr.aurjohn-systems.site", "_blank");
+      window.open("https://inventory.aurjohn-systems.site", "_blank");
     }
   }
 };

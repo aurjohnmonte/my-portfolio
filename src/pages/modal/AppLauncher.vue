@@ -165,6 +165,7 @@ export default defineComponent({
 /* ── Modal box ── */
 .app-launcher-modal {
   width: min(580px, 92vw);
+  max-height: min(640px, 85vh);          /* NEW: caps the height */
   background: rgba(22, 20, 26, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 18px;
@@ -175,14 +176,14 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 18px;
+  overflow: hidden;                      /* NEW: keeps scrolling inside the rounded box */
   font-family: 'Ubuntu', Inter, system-ui, sans-serif;
 }
 
 /* ── Header ── */
-.launcher-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.launcher-header,
+.launcher-search-wrap {
+  flex-shrink: 0;
 }
 
 .launcher-title {
@@ -255,6 +256,28 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   gap: 10px;
+
+  flex: 1 1 auto;                        /* NEW: takes the remaining height */
+  min-height: 0;                         /* NEW: lets it shrink, so it can scroll */
+  overflow-y: auto;                      /* NEW: the scroll */
+  overscroll-behavior: contain;          /* NEW: the page behind doesn't scroll */
+  padding: 4px 6px 4px 0;                /* room so the hover lift and glow aren't clipped */
+
+  scrollbar-width: thin;                 /* NEW: dark scrollbar (Firefox) */
+  scrollbar-color: rgba(111, 25, 216, 0.5) transparent;
+}
+.launcher-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.launcher-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+.launcher-grid::-webkit-scrollbar-thumb {
+  background: rgba(111, 25, 216, 0.5);
+  border-radius: 6px;
+}
+.launcher-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(111, 25, 216, 0.75);
 }
 
 /* ── App tile ── */
